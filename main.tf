@@ -10,9 +10,9 @@ locals {
   branch_policy_scope = {
     for repo in var.repositories :
     repo.name => {
-      repository_id   = repo.id
-      repository_ref  = repo.default_branch
-      match_type      = "Exact"
+      repository_id  = repo.id
+      repository_ref = repo.default_branch
+      match_type     = "Exact"
     }
   }
 }
