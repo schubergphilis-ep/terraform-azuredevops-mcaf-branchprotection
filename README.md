@@ -1,4 +1,4 @@
-# terraform-azure-mcaf-devops-branchprotection
+# terraform-azure-mcaf-branchprotection
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
