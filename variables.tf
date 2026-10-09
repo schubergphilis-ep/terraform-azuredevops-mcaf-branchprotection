@@ -147,6 +147,7 @@ Fields:
   - manual_queue_only (optional): Whether the build must be manually queued. Default is false.
   - queue_on_source_update_only (optional): Queue builds only on source updates. Default is true.
   - suffix (optional): Suffix to append to the build policy name. Default is an empty string.
+  - excluded_repositories (optional): Names of repositories that get no build validation policy, for example repositories without a "<repository>-<suffix>" pipeline. Default is an empty list.
 DESCRIPTION
   type = object({
     enabled                     = optional(bool, false)
@@ -155,6 +156,7 @@ DESCRIPTION
     manual_queue_only           = optional(bool, false)
     queue_on_source_update_only = optional(bool, true)
     suffix                      = optional(string, "")
+    excluded_repositories       = optional(list(string), [])
   })
   default = {
     enabled                     = false
@@ -163,5 +165,6 @@ DESCRIPTION
     manual_queue_only           = false
     queue_on_source_update_only = true
     suffix                      = ""
+    excluded_repositories       = []
   }
 }
