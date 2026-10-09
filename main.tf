@@ -10,9 +10,9 @@ locals {
   branch_policy_scope = {
     for repo in var.repositories :
     repo.name => {
-      repository_id   = repo.id
-      repository_ref  = repo.default_branch
-      match_type      = "Exact"
+      repository_id  = repo.id
+      repository_ref = repo.default_branch
+      match_type     = "Exact"
     }
   }
 }
@@ -130,7 +130,8 @@ data "azuredevops_build_definition" "build_definition" {
   project_id = var.project_id
   for_each = {
     for k, v in local.branch_policy_scope :
-    k => v if var.branch_policy_build_validation.suffix != "" && v != null
+    k => v if var.branch_policy_build_validation.suffix != "" &&
+    !contains(var.branch_policy_build_validation.excluded_repositories, k)
   }
   name = "${each.key}-${var.branch_policy_build_validation.suffix}"
 }
@@ -140,7 +141,7 @@ resource "azuredevops_branch_policy_build_validation" "this" {
   for_each = {
     for k, v in local.branch_policy_scope :
     k => v if var.branch_policy_build_validation.suffix != "" &&
-    try(data.azuredevops_build_definition.build_definition[k], null) != null
+    !contains(var.branch_policy_build_validation.excluded_repositories, k)
   }
   project_id = var.project_id
 
